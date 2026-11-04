@@ -1,0 +1,15 @@
+{
+  "name": "perennia-informes",
+  "owner": {
+    "name": "Perennia"
+  },
+  "plugins": [
+    {
+      "name": "perennia-informes",
+      "source": "./plugins/perennia-informes",
+      "description": "Informes técnicos de Perennia con conexión individual a Plataforma",
+      "version": "0.1.0",
+      "category": "productivity"
+    }
+  ]
+}
