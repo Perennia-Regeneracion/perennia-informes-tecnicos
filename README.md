@@ -7,10 +7,11 @@ Plugin de Claude para preparar informes de Diagnóstico Inicial, Plan Abierto y 
 1. Abrí **Plugins** (en algunas cuentas, **Customize → Plugins**).
 2. Elegí **Add → Add marketplace → Add from a repository** e ingresá `Perennia-Regeneracion/perennia-informes-tecnicos`.
 3. En ese marketplace, agregá el plugin **perennia-informes**.
-4. Conectá `conector-plataforma` iniciando sesión con tu propia cuenta de Plataforma Perennia.
-5. Abrí una conversación nueva, activá el conector si aparece desactivado y pedí: **«Comprobá mi conexión con Plataforma y ayudame a preparar un informe»**.
+4. Abrí **Conectores** dentro del plugin. En `conector-plataforma`, pulsá **Conectar**. Claude mostrará la URL de Plataforma; pulsá **Continuar**, dejá **Iniciar sesión ahora** y **Registrar automáticamente**, y pulsá **Agregar**.
+5. El conector quedará como **Sin conexión**. Pulsá **Conectar** otra vez. Se abrirá Plataforma: iniciá sesión con tu propia cuenta y revisá la pantalla **Autorizar acceso**. Si estás de acuerdo con el acceso que muestra, pulsá **Autorizar**.
+6. Abrí una conversación nueva, activá el conector si aparece desactivado y pedí: **«Comprobá mi conexión con Plataforma y ayudame a preparar un informe»**.
 
-No necesitás instalar programas, descargar el repositorio ni configurar tokens. La instalación del plugin no modifica tus accesos a datos.
+No necesitás instalar programas, descargar el repositorio ni configurar tokens. La instalación del plugin no modifica tus accesos a datos. El inicio de sesión y la autorización OAuth son pasos necesarios para que Claude use el conector con tu cuenta.
 
 ## Tu primer informe
 
