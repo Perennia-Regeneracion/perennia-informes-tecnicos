@@ -4,7 +4,7 @@ Esta prueba permite comprobar la instalación sin publicar ni enviar un informe 
 
 ## 1. Instalar y conectar
 
-Seguí los pasos de [README.md](README.md). En una conversación nueva, escribí:
+Seguí los pasos de [README.md](README.md), incluida la conexión OAuth. En una conversación nueva, escribí:
 
 > Comprobá mi conexión con Plataforma Perennia. Decime si `mis_capacidades` responde. No hagas cambios.
 
