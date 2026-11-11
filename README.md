@@ -4,6 +4,8 @@ Plugin de Claude para preparar informes de Diagnóstico Inicial, Plan Abierto y 
 
 También hay un [paquete para publicación pública en ChatGPT](chatgpt/README.md), con conexión OAuth individual a Plataforma y una prueba guiada.
 
+**Estado:** el plugin de Claude ya tiene estructura de marketplace, pero el conector seguro `https://plataforma2.perennia.com.ar/mcp-informes` todavía no está desplegado. Hasta que exista y pase las pruebas de permisos por técnico, la instalación no permite preparar informes conectados a Plataforma. El MCP general `/mcp` no tiene el alcance limitado requerido para técnicos.
+
 ## Instalación en Claude
 
 1. Abrí **Plugins** (en algunas cuentas, **Customize → Plugins**).
@@ -11,7 +13,7 @@ También hay un [paquete para publicación pública en ChatGPT](chatgpt/README.m
 3. En ese marketplace, agregá el plugin **perennia-informes**.
 4. Abrí **Conectores** dentro del plugin. En `conector-plataforma`, pulsá **Conectar**. Claude mostrará la URL de Plataforma; pulsá **Continuar**, dejá **Iniciar sesión ahora** y **Registrar automáticamente**, y pulsá **Agregar**.
 5. El conector quedará como **Sin conexión**. Pulsá **Conectar** otra vez. Se abrirá Plataforma: iniciá sesión con tu propia cuenta y revisá la pantalla **Autorizar acceso**. Si estás de acuerdo con el acceso que muestra, pulsá **Autorizar**.
-6. Abrí una conversación nueva, activá el conector si aparece desactivado y pedí: **«Comprobá mi conexión con Plataforma y ayudame a preparar un informe»**.
+6. Cuando Perennia anuncie que el conector de informes está habilitado, abrí una conversación nueva, activá el conector si aparece desactivado y pedí: **«Comprobá mi conexión con Plataforma y ayudame a preparar un informe»**.
 
 No necesitás instalar programas, descargar el repositorio ni configurar tokens. La instalación del plugin no modifica tus accesos a datos. El inicio de sesión y la autorización OAuth son pasos necesarios para que Claude use el conector con tu cuenta.
 

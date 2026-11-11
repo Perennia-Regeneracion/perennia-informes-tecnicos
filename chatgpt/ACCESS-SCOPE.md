@@ -1,6 +1,6 @@
 # Contrato del MCP público de informes
 
-Destino del plugin: `https://plataforma2.perennia.com.ar/mcp-informes`. Este endpoint debe existir y pasar una prueba con dos técnicos antes de subir el ZIP al directorio público. El MCP general `/mcp` no sirve para este paquete: anuncia herramientas de escritura y `consultar_sql` permite lecturas más amplias que los planes asignados.
+Destino de los plugins de Claude y ChatGPT: `https://plataforma2.perennia.com.ar/mcp-informes`. Este endpoint debe existir y pasar una prueba con tres técnicos antes de habilitar Claude o subir el ZIP al directorio público de ChatGPT. El MCP general `/mcp` no sirve para estos paquetes: anuncia herramientas de escritura y `consultar_sql` permite lecturas más amplias que los planes asignados.
 
 ## Autoridad
 

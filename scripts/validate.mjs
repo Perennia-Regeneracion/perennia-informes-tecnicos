@@ -16,7 +16,7 @@ if (marketplace.plugins?.length !== 1 || marketplace.plugins[0].source !== "./pl
 if (marketplace.plugins[0].name !== manifest.name || marketplace.plugins[0].version !== manifest.version) fail("Identidad o versión desalineada");
 if (JSON.stringify(actualSkills) !== JSON.stringify(expectedSkills)) fail(`Skills inesperadas: ${actualSkills.join(", ")}`);
 if (Object.keys(mcp.mcpServers ?? {}).join() !== "conector-plataforma") fail("El kit debe declarar sólo Conector Plataforma");
-if (mcp.mcpServers["conector-plataforma"].url !== "https://plataforma2.perennia.com.ar/mcp") fail("URL del conector inesperada");
+if (mcp.mcpServers["conector-plataforma"].url !== "https://plataforma2.perennia.com.ar/mcp-informes") fail("El plugin de Claude debe usar el MCP acotado a informes");
 
 for (const skill of expectedSkills) {
   const content = readFileSync(join(plugin, "skills", skill, "SKILL.md"), "utf8");

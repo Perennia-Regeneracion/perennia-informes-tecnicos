@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "perennia-informes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Borradores de Diagnóstico Inicial, Plan Abierto y Plan Cerrado para técnicos de Perennia.",
   "author": {
     "name": "Perennia",

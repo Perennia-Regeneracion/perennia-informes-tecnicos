@@ -12,7 +12,7 @@ Antes de maquetar, seguí [perfil y nodo](references/perfil-y-nodo.md): recuper�
 ## Preparación
 
 1. Confirmá nombre del establecimiento, fecha de visita, técnico responsable y servicio. Si hay homónimos, pedí que el técnico elija antes de atribuir datos.
-2. Usá `buscar_establecimiento` y las herramientas de lectura del `conector-plataforma` que estén disponibles. Filtrá por el establecimiento y servicio confirmados. Verificá tablas y columnas con `describir_tabla` antes de construir consultas. Si la lectura falla, registrá qué falta y seguí con el material aportado por el técnico.
+2. Usá `listar_planes_asignados` para identificar el servicio y `obtener_establecimiento_asignado` para leer el contexto del campo. Si hay un diagnóstico publicado, leelo con `obtener_plan_asignado`. Confirmá establecimiento, servicio, campaña y versión antes de atribuir datos. Si la lectura falla, registrá qué falta y seguí con el material aportado por el técnico.
 3. Pedí las notas de recorrida, fotos con descripción, datos de monitoreo, cartografía y cualquier análisis que el técnico quiera usar. Aceptá el material en varias tandas. No exijas una planilla que no sea necesaria para el caso.
 4. Separá lo observado, lo informado por el productor, lo leído de Plataforma y lo que es una interpretación del técnico. Señalá discrepancias antes de redactar.
 
