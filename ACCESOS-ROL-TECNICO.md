@@ -6,7 +6,7 @@
 
 Una cuenta autenticada como `tecnico` ve normalmente **131 herramientas del catálogo** (50 consultas y 81 comandos), más **4 lecturas genéricas** y `mis_capacidades`: **136 herramientas**. El número no incluye capacidades condicionales. Que una herramienta aparezca no asegura que toda llamada sea autorizada: el canal, cada RPC y las políticas de base de datos pueden restringir recursos, hub, asignación o estado.
 
-El rol también ve `consultar_sql` (SELECT/WITH, con grants y RLS del JWT del usuario). No hay una restricción global del conector que lo reduzca a planes y grabaciones asignados. El requisito de acceso A/B/C definido para informes sigue pendiente de una prueba con cuentas técnicas.
+El rol también ve `consultar_sql` (SELECT/WITH, con grants y RLS del JWT del usuario). No hay una restricción global del conector que lo reduzca a planes y grabaciones asignados. En el código de Plataforma, `plan_abierto.pa_planificacion` y `plan_cerrado.pc_planificacion` conceden `SELECT` a `authenticated` y tienen una política RLS `internal_full` basada en `private.is_internal()`, que incluye a `tecnico` sin comprobar asignación en esa política. Por eso el aislamiento A/B/C definido para informes no puede darse por satisfecho; falta probarlo con cuentas técnicas y, si se confirma acceso de C, corregir la autorización en Plataforma.
 
 ## Inventario por área
 
