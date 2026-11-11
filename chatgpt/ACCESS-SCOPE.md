@@ -4,7 +4,7 @@ Destino del plugin: `https://plataforma2.perennia.com.ar/mcp-informes`. Este end
 
 ## Autoridad
 
-- Autenticar cada llamada con el OAuth del usuario de Plataforma; derivar `id_educador` del JWT validado en el servidor. No aceptar un ID de técnico enviado por el cliente como autoridad.
+- Autenticar cada llamada con el OAuth interactivo del usuario de Plataforma; validar el JWT y resolver `id_educador` y `id_hub` desde la base de datos en el servidor. Rechazar tokens de servicio delegado y no aceptar un ID de técnico enviado por el cliente como autoridad. Regla funcional: FCH-555 v3.
 - Un plan es visible para el técnico responsable del establecimiento y para cada técnico asignado al servicio que lo origina, aunque sean personas distintas. La pertenencia al mismo hub, la autoría de una transcripción o la mención en una grabación no amplían este permiso. Regla funcional: Plataforma FCH-555 v2.
 - Una grabación es visible sólo si pertenece al usuario o está anclada a un servicio o establecimiento asignado a él. La misma regla debe aplicarse a la lista, el detalle, la transcripción y cualquier URL de archivo.
 - Sin asignación verificable, responder `RESOURCE_NOT_FOUND` o `AUTHZ`; nunca devolver datos parciales, incluso si el usuario conoce el ID.
