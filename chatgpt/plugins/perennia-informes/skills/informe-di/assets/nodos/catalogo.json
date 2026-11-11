@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "nodos": [
+    {
+      "id": "quebracho",
+      "nombre": "Quebracho",
+      "alias": ["Nodo Quebracho"],
+      "logo_archivo": "quebracho.png"
+    },
+    {
+      "id": "alianzas-bio-regeneracion",
+      "nombre": "Alianzas en Bio Regeneración",
+      "alias": ["Alianzas", "Bio Regeneración"],
+      "logo_archivo": "alianzas-bio-regeneracion.png"
+    },
+    {
+      "id": "sinergia-regenera",
+      "nombre": "Sinergia Regenera",
+      "alias": ["Sinergia"],
+      "logo_archivo": "sinergia-regenera.png"
+    },
+    {
+      "id": "recuperando-pampas",
+      "nombre": "Recuperando Pampas",
+      "alias": ["Nodo Recuperando Pampas"],
+      "logo_archivo": "recuperando-pampas.png"
+    },
+    {
+      "id": "regenoa",
+      "nombre": "RegeNOA",
+      "alias": ["Rege NOA"],
+      "logo_archivo": "regenoa.png"
+    },
+    {
+      "id": "witru",
+      "nombre": "Witru",
+      "alias": ["Nodo Witru"],
+      "logo_archivo": "witru.png"
+    },
+    {
+      "id": "campo-vivo",
+      "nombre": "Campo Vivo",
+      "alias": ["Nodo Campo Vivo"],
+      "logo_archivo": "campo-vivo.png"
+    }
+  ]
+}

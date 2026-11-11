@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -36,3 +36,35 @@ for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))
   }
 }
 console.log("Kit público: cuatro skills, un conector y manifiestos válidos.");
+
+const chatgptRoot = join(root, "chatgpt");
+const chatgptPlugin = join(chatgptRoot, "plugins/perennia-informes");
+const chatgptMarketplace = JSON.parse(readFileSync(join(chatgptRoot, ".agents/plugins/marketplace.json"), "utf8"));
+const chatgptManifest = JSON.parse(readFileSync(join(chatgptPlugin, ".codex-plugin/plugin.json"), "utf8"));
+const chatgptSkills = readdirSync(join(chatgptPlugin, "skills")).sort();
+if (JSON.stringify(chatgptSkills) !== JSON.stringify(expectedSkills)) fail("Skills de ChatGPT incompletas");
+if (chatgptMarketplace.plugins?.length !== 1 || chatgptMarketplace.plugins[0].source?.path !== "./plugins/perennia-informes") fail("Marketplace de ChatGPT inválido");
+if (chatgptManifest.name !== manifest.name || chatgptManifest.version !== manifest.version) fail("Identidad de ChatGPT desalineada");
+if (chatgptManifest.skills !== "./skills/" || chatgptManifest.onboardingSkill !== "./skills/conectar-plataforma/SKILL.md") fail("Skills de ChatGPT sin declarar");
+if (existsSync(join(chatgptPlugin, ".mcp.json")) || existsSync(join(chatgptPlugin, "mcp.json"))) fail("El plugin de ChatGPT web no debe declarar MCP local");
+
+function compareTrees(source, target, relative = "") {
+  const sourceEntries = readdirSync(source).sort();
+  const targetEntries = readdirSync(target).sort();
+  if (JSON.stringify(sourceEntries) !== JSON.stringify(targetEntries)) fail(`Kit de ChatGPT desalineado: ${relative || source}`);
+  for (const name of sourceEntries) {
+    const next = join(relative, name);
+    const from = join(source, name);
+    const to = join(target, name);
+    if (statSync(from).isDirectory()) {
+      if (!statSync(to).isDirectory()) fail(`Kit de ChatGPT desalineado: ${next}`);
+      compareTrees(from, to, next);
+    } else if (!readFileSync(from).equals(readFileSync(to))) {
+      fail(`Kit de ChatGPT desalineado: ${next}`);
+    }
+  }
+}
+for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))) {
+  compareTrees(join(plugin, "skills", skill), join(chatgptPlugin, "skills", skill), skill);
+}
+console.log("Kit ChatGPT: marketplace web y tres skills de informes alineadas.");

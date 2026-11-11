@@ -1,0 +1,15 @@
+{
+  "name": "perennia-informes-chatgpt",
+  "interface": {
+    "displayName": "Informes Perennia para ChatGPT"
+  },
+  "plugins": [
+    {
+      "name": "perennia-informes",
+      "source": {
+        "source": "local",
+        "path": "./plugins/perennia-informes"
+      }
+    }
+  ]
+}
