@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PUBLIC_KIT_ROOT="$root" node "$root/scripts/validate.mjs"
+
+output="${1:-$root/chatgpt/perennia-informes-chatgpt.zip}"
+rm -f "$output"
+endpoint="https://plataforma2.perennia.com.ar/mcp-informes"
+status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 -X POST \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  --data '{}' "$endpoint")"
+if [ "$status" != "401" ]; then
+  echo "El endpoint acotado a informes no devolvió el desafío OAuth esperado (HTTP $status). No se genera el ZIP público." >&2
+  exit 1
+fi
+
+mkdir -p "$(dirname "$output")"
+(
+  cd "$root/chatgpt/plugins/perennia-informes"
+  zip -q -r "$output" plugin.json mcp.json assets skills
+)
+echo "Paquete ChatGPT: $output"

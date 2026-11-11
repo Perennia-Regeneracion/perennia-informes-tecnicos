@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -16,7 +16,7 @@ if (marketplace.plugins?.length !== 1 || marketplace.plugins[0].source !== "./pl
 if (marketplace.plugins[0].name !== manifest.name || marketplace.plugins[0].version !== manifest.version) fail("Identidad o versión desalineada");
 if (JSON.stringify(actualSkills) !== JSON.stringify(expectedSkills)) fail(`Skills inesperadas: ${actualSkills.join(", ")}`);
 if (Object.keys(mcp.mcpServers ?? {}).join() !== "conector-plataforma") fail("El kit debe declarar sólo Conector Plataforma");
-if (mcp.mcpServers["conector-plataforma"].url !== "https://plataforma2.perennia.com.ar/mcp") fail("URL del conector inesperada");
+if (mcp.mcpServers["conector-plataforma"].url !== "https://plataforma2.perennia.com.ar/mcp-informes") fail("El plugin de Claude debe usar el MCP acotado a informes");
 
 for (const skill of expectedSkills) {
   const content = readFileSync(join(plugin, "skills", skill, "SKILL.md"), "utf8");
@@ -36,3 +36,46 @@ for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))
   }
 }
 console.log("Kit público: cuatro skills, un conector y manifiestos válidos.");
+
+const chatgptRoot = join(root, "chatgpt");
+const chatgptPlugin = join(chatgptRoot, "plugins/perennia-informes");
+const chatgptManifest = JSON.parse(readFileSync(join(chatgptPlugin, "plugin.json"), "utf8"));
+const chatgptMcp = JSON.parse(readFileSync(join(chatgptPlugin, "mcp.json"), "utf8"));
+const chatgptSkills = readdirSync(join(chatgptPlugin, "skills")).sort();
+if (JSON.stringify(chatgptSkills) !== JSON.stringify(expectedSkills)) fail("Skills de ChatGPT incompletas");
+if (chatgptManifest.name !== manifest.name || chatgptManifest.version !== manifest.version) fail("Identidad de ChatGPT desalineada");
+if (chatgptManifest.$schema !== "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json") fail("Plugin ChatGPT sin schema portable");
+if (chatgptManifest.extensions?.["com.openai"]?.onboardingSkill !== "./skills/conectar-plataforma/SKILL.md") fail("Onboarding de ChatGPT sin declarar");
+if (existsSync(join(chatgptPlugin, ".mcp.json")) || existsSync(join(chatgptPlugin, ".app.json"))) fail("Configuración local o app ajena en el paquete público");
+if (chatgptMcp.$schema !== "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json") fail("MCP ChatGPT sin schema portable");
+const chatgptServer = chatgptMcp.mcpServers?.["conector-plataforma"];
+if (Object.keys(chatgptMcp.mcpServers ?? {}).length !== 1 || chatgptServer?.type !== "streamable-http" || chatgptServer?.url !== "https://plataforma2.perennia.com.ar/mcp-informes") fail("El plugin público debe usar el MCP acotado a informes");
+if (chatgptServer.extensions?.["com.openai"]?.auth?.client?.mode !== "dcr" || chatgptServer.extensions?.["com.openai"]?.auth?.type !== "oauth") fail("OAuth del paquete ChatGPT inválido");
+const chatgptInterface = chatgptManifest.extensions?.["com.openai"]?.interface;
+for (const field of ["displayName", "shortDescription", "longDescription", "developerName", "category", "websiteURL", "supportURL", "composerIcon", "logo"]) {
+  if (!chatgptInterface?.[field]) fail(`Falta metadata pública ChatGPT: ${field}`);
+}
+for (const field of ["composerIcon", "logo"]) {
+  if (!existsSync(join(chatgptPlugin, chatgptInterface[field]))) fail(`Falta asset público ChatGPT: ${field}`);
+}
+
+function compareTrees(source, target, relative = "") {
+  const sourceEntries = readdirSync(source).sort();
+  const targetEntries = readdirSync(target).sort();
+  if (JSON.stringify(sourceEntries) !== JSON.stringify(targetEntries)) fail(`Kit de ChatGPT desalineado: ${relative || source}`);
+  for (const name of sourceEntries) {
+    const next = join(relative, name);
+    const from = join(source, name);
+    const to = join(target, name);
+    if (statSync(from).isDirectory()) {
+      if (!statSync(to).isDirectory()) fail(`Kit de ChatGPT desalineado: ${next}`);
+      compareTrees(from, to, next);
+    } else if (!readFileSync(from).equals(readFileSync(to))) {
+      fail(`Kit de ChatGPT desalineado: ${next}`);
+    }
+  }
+}
+for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))) {
+  compareTrees(join(plugin, "skills", skill), join(chatgptPlugin, "skills", skill), skill);
+}
+console.log("Kit ChatGPT: paquete portable, OAuth y tres skills de informes alineadas.");
