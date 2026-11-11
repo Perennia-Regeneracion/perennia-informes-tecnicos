@@ -8,4 +8,4 @@ La distribución prevista es **manual y local**, desde el repositorio público. 
 
 El conector usa el MCP habitual de Plataforma: `https://plataforma2.perennia.com.ar/mcp`. El rol `tecnico` anuncia lecturas y comandos; el [catálogo actual](../ACCESOS-ROL-TECNICO.md) documenta el alcance observado en el código. La presencia de una skill en la app no demuestra que OAuth y permisos funcionen para una cuenta concreta.
 
-Después de instalar y autenticar, probá `mis_capacidades` en una conversación nueva y seguí [ONBOARDING.md](ONBOARDING.md). No uses datos reales hasta que la prueba de aislamiento A/B/C haya pasado.
+Después de instalar y autenticar, probá `mis_capacidades` en una conversación nueva y seguí [ONBOARDING.md](ONBOARDING.md). Usá los datos a los que tu cuenta ya accede habitualmente en Plataforma.

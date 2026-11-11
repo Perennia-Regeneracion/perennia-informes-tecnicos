@@ -4,7 +4,7 @@ Plugin de Claude para preparar informes de Diagnóstico Inicial, Plan Abierto y 
 
 También hay un [paquete para instalación local en ChatGPT](chatgpt/README.md), con conexión OAuth individual a Plataforma. La [guía de instalación y prueba](INSTALACION-LOCAL.md) cubre ambas aplicaciones.
 
-**Estado:** los paquetes de Claude y ChatGPT se pueden instalar manualmente y apuntan al MCP habitual de Plataforma (`https://plataforma2.perennia.com.ar/mcp`). Cada técnico debe conectarse con su cuenta de Plataforma. El rol `tecnico` tiene un catálogo amplio de herramientas; consultá [sus accesos actuales](ACCESOS-ROL-TECNICO.md) antes de habilitarlo en una cuenta. La prueba de OAuth y permisos con cuentas técnicas sigue pendiente.
+**Estado:** los paquetes de Claude y ChatGPT se pueden instalar manualmente y apuntan al MCP habitual de Plataforma (`https://plataforma2.perennia.com.ar/mcp`). Cada técnico debe conectarse con su cuenta de Plataforma. Rigen los permisos existentes del rol `tecnico`; consultá [su catálogo de herramientas](ACCESOS-ROL-TECNICO.md). Falta comprobar OAuth y un borrador completo con un usuario técnico piloto en cada aplicación.
 
 ## Instalación en Claude
 

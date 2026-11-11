@@ -6,7 +6,7 @@
 
 Una cuenta autenticada como `tecnico` ve normalmente **131 herramientas del catálogo** (50 consultas y 81 comandos), más **4 lecturas genéricas** y `mis_capacidades`: **136 herramientas**. El número no incluye capacidades condicionales. Que una herramienta aparezca no asegura que toda llamada sea autorizada: el canal, cada RPC y las políticas de base de datos pueden restringir recursos, hub, asignación o estado.
 
-El rol también ve `consultar_sql` (SELECT/WITH, con grants y RLS del JWT del usuario). No hay una restricción global del conector que lo reduzca a planes y grabaciones asignados. En el código de Plataforma, `plan_abierto.pa_planificacion` y `plan_cerrado.pc_planificacion` conceden `SELECT` a `authenticated` y tienen una política RLS `internal_full` basada en `private.is_internal()`, que incluye a `tecnico` sin comprobar asignación en esa política. Por eso el aislamiento A/B/C definido para informes no puede darse por satisfecho; falta probarlo con cuentas técnicas y, si se confirma acceso de C, corregir la autorización en Plataforma.
+El rol también ve `consultar_sql` (SELECT/WITH, con grants y RLS del JWT del usuario). Para esta entrega rigen los permisos existentes de Plataforma; no se agrega una restricción especial por asignación para informes. En el código actual, `plan_abierto.pa_planificacion` y `plan_cerrado.pc_planificacion` conceden `SELECT` a `authenticated` y tienen una política RLS `internal_full` basada en `private.is_internal()`, que incluye a `tecnico`. Este inventario describe ese alcance y permite explicarlo antes de conectar la cuenta.
 
 ## Inventario por área
 
@@ -111,6 +111,6 @@ En las listas, **L** significa consulta y **E** significa comando que puede crea
 - Algunas herramientas de **soporte** pueden aparecer por autorización nominal del usuario, aparte del rol.
 - La operación concreta puede requerir sesión real, confirmación, pertenencia a un hub, participación en un servicio o permisos sobre un documento.
 
-## Comprobación pendiente
+## Comprobación de entrega
 
-Probar con A responsable del establecimiento, B asignado al servicio y C del mismo hub sin asignación. A y B deben leer el plan y grabaciones correspondientes; C debe fallar tanto en listados como por ID y mediante `consultar_sql`. Repetir tras quitar una asignación. Hasta verificarlo, no afirmar que cada técnico sólo puede leer sus planes y grabaciones.
+Con una cuenta técnica piloto, comprobar `mis_capacidades`, leer un establecimiento conocido y un plan o grabación que consulte habitualmente en Plataforma, y producir un borrador de informe. Confirmar la identidad, el hub y las fuentes usadas. El manual de instalación detalla la prueba para Claude y ChatGPT.
