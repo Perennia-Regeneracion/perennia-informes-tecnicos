@@ -5,7 +5,7 @@ Destino del plugin: `https://plataforma2.perennia.com.ar/mcp-informes`. Este end
 ## Autoridad
 
 - Autenticar cada llamada con el OAuth del usuario de Plataforma; derivar `id_educador` del JWT validado en el servidor. No aceptar un ID de técnico enviado por el cliente como autoridad.
-- Un plan es visible sólo si el usuario está asignado al servicio o establecimiento que lo origina. La pertenencia al mismo hub, la autoría de una transcripción o la mención en una grabación no amplían este permiso.
+- Un plan es visible para el técnico responsable del establecimiento y para cada técnico asignado al servicio que lo origina, aunque sean personas distintas. La pertenencia al mismo hub, la autoría de una transcripción o la mención en una grabación no amplían este permiso. Regla funcional: Plataforma FCH-555 v2.
 - Una grabación es visible sólo si pertenece al usuario o está anclada a un servicio o establecimiento asignado a él. La misma regla debe aplicarse a la lista, el detalle, la transcripción y cualquier URL de archivo.
 - Sin asignación verificable, responder `RESOURCE_NOT_FOUND` o `AUTHZ`; nunca devolver datos parciales, incluso si el usuario conoce el ID.
 - Aplicar el filtro en las consultas/funciones de base de datos y volver a comprobarlo en cada lectura. Las instrucciones de la skill y el filtrado en ChatGPT no son una barrera de autorización.
@@ -25,4 +25,4 @@ No anunciar `consultar_sql`, lecturas genéricas de tablas ni acciones de escrit
 
 ## Prueba mínima de autorización
 
-Crear dos usuarios técnicos A y B del mismo hub, con planes y grabaciones distintos. Con el token de A, listar y leer sus datos; intentar leer por ID los de B y comprobar rechazo. Repetir a la inversa. Comprobar también una grabación sin ancla, otra anclada a un servicio asignado y una anclada a un servicio ajeno. Verificar que el listado de herramientas del MCP no incluye escritura ni SQL genérico.
+Crear tres usuarios técnicos A, B y C del mismo hub: A responsable del establecimiento, B asignado al servicio y C sin ninguna de esas asignaciones. A y B deben listar y leer el plan del servicio; C no debe verlo ni obtenerlo por ID. Quitar la responsabilidad de A y comprobar que pierde acceso en la siguiente lectura, mientras B lo conserva. Probar además planes y grabaciones exclusivos de A y B, con rechazo cruzado por ID. Comprobar una grabación sin ancla, otra anclada a un servicio asignado y una anclada a un servicio ajeno. Verificar que el listado de herramientas del MCP no incluye escritura ni SQL genérico.
