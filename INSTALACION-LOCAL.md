@@ -1,60 +1,103 @@
-# Instalar Informes Perennia en una cuenta individual
+# Instalar Informes Perennia
 
-Cada técnico usa su propia cuenta de Claude o ChatGPT y se autentica con su usuario de Plataforma Perennia. El repositorio contiene instrucciones y la dirección del conector; no contiene credenciales ni informes reales.
+Este es el manual para técnicos. Elegí la aplicación que usás: [ChatGPT](#si-tenés-chatgpt) o [Claude](#si-tenés-claude). En ambos casos, conectá **tu propia cuenta de Plataforma Perennia**. El repositorio es público y no requiere cuenta de GitHub.
 
-**Estado actual:** los plugins apuntan al MCP habitual de Plataforma (`https://plataforma2.perennia.com.ar/mcp`). La instalación de archivos y el desafío OAuth del servidor están validados; falta una prueba completa con un usuario técnico en cada aplicación. Revisá [el catálogo del rol técnico](ACCESOS-ROL-TECNICO.md).
+El plugin prepara borradores de **Diagnóstico Inicial, Plan Abierto y Plan Cerrado**. Vos revisás las cifras, el análisis y el logo antes de firmar o compartir el informe. Usa los permisos que ya tiene tu usuario en Plataforma; [acá está el catálogo del rol técnico](ACCESOS-ROL-TECNICO.md).
 
-## 1. Obtener el repositorio
+> **Antes de empezar:** necesitás una cuenta activa de Plataforma y una cuenta de ChatGPT o Claude. Las capturas muestran la interfaz de noviembre de 2026; algunos nombres pueden variar según la versión.
 
-El repositorio es público: **no necesitás una cuenta de GitHub**. Para Claude chat podés ir directamente al paso 2; la aplicación obtiene el plugin desde GitHub. Para ChatGPT de escritorio, conservá una copia local:
+## Si tenés ChatGPT
 
-Con Git instalado, cloná una copia en una carpeta que puedas conservar:
+### 1. Descargá el archivo del plugin
+
+Abrí [**Descargar Informes Perennia para ChatGPT**](chatgpt/perennia-informes-chatgpt-0.1.3.zip). En GitHub, pulsá **Descargar** para guardar `perennia-informes-chatgpt-0.1.3.zip` en tu computadora. Descargá **ese ZIP del plugin**, no el ZIP completo del repositorio. El repositorio es público; no necesitás una cuenta de GitHub.
+
+### 2. Abrí Complementos en ChatGPT web
+
+Entrá en [ChatGPT](https://chatgpt.com/) con tu cuenta y abrí **Complementos** en la barra lateral:
+
+![Captura real de ChatGPT web con la sección Complementos abierta](docs/capturas/chatgpt-01-complementos-web.jpg)
+
+### 3. Elegí cargar el archivo
+
+Pulsá **Agregar → Cargar archivo del complemento**:
+
+![Captura real del menú Agregar de ChatGPT web con la opción Cargar archivo del complemento](docs/capturas/chatgpt-02-agregar-web.jpg)
+
+En la ventana **Nuevo complemento**, pulsá **haz clic para subirlo** y seleccioná el ZIP que descargaste. Después pulsá **Agregar complemento**:
+
+![Captura real del formulario Nuevo complemento para subir un ZIP en ChatGPT web](docs/capturas/chatgpt-03-cargar-zip.jpg)
+
+La opción de carga depende de los permisos de tu cuenta o espacio de trabajo. Si no aparece, usá la [alternativa de escritorio](#alternativa-chatgpt-de-escritorio) o pedí al administrador de tu espacio que habilite la carga de plugins. [Ayuda oficial de OpenAI sobre carga de ZIP](https://help.openai.com/en/articles/20001256-plugins-in-chatgpt).
+
+### 4. Conectá Plataforma y pedí el informe
+
+Abrí **Informes Perennia**, conectá **conector-plataforma** e iniciá sesión con **tu usuario de Plataforma Perennia**. Revisá y autorizá el acceso que muestra Plataforma. En un chat nuevo, escribí:
+
+> Comprobá mi conexión con Plataforma Perennia usando `mis_capacidades`. No hagas cambios.
+
+Si responde con tu identidad, pedí: **“Ayudame a preparar un borrador de Diagnóstico Inicial / Plan Abierto / Plan Cerrado del establecimiento [nombre]”**. Indicá el servicio o campaña y adjuntá tus notas de campo. Si querés conservar tu formato, adjuntá un informe anterior tuyo como modelo de **estilo**, sin copiar sus datos.
+
+### Alternativa: ChatGPT de escritorio
+
+Si tu cuenta no permite cargar ZIP en la web, podés instalar el plugin desde el repositorio público en ChatGPT de escritorio. Necesitás Git y [Codex CLI](https://developers.openai.com/codex/cli). La captura muestra el botón **Code** y la dirección HTTPS del repositorio:
+
+![Captura del repositorio público con la URL para clonar](docs/capturas/chatgpt-01-repositorio.jpg)
+
+En una terminal, ejecutá estos comandos y reemplazá `<carpeta-del-repo>` por la ruta completa de la carpeta descargada:
 
 ```bash
 git clone https://github.com/Perennia-Regeneracion/perennia-informes-tecnicos.git
-```
-
-Para actualizar más adelante, ejecutá `git pull` dentro de esa carpeta y refrescá el plugin en la aplicación. La instalación debe tomar la versión de `main`, no una rama de trabajo.
-
-## 2. Claude
-
-### Claude chat o Desktop
-
-En **Plugins → Add marketplace → Add from a repository**, ingresá `Perennia-Regeneracion/perennia-informes-tecnicos`. Instalá **perennia-informes** y conectá `conector-plataforma` con tu usuario de Plataforma. La aplicación obtiene el marketplace desde GitHub: el clon local sirve como copia para inspeccionar los archivos, pero Claude chat no lee directamente esa carpeta.
-
-### Claude Code, si se usa localmente
-
-Desde una terminal, reemplazá `<carpeta-del-repo>` por la ruta donde clonaste el proyecto:
-
-```bash
-claude plugin validate <carpeta-del-repo>
-claude plugin marketplace add <carpeta-del-repo>
-claude plugin install perennia-informes@perennia-informes
-claude plugin details perennia-informes
-```
-
-El detalle debe mostrar las cuatro skills y `conector-plataforma`. En Claude chat o Claude Code, completá el inicio de sesión OAuth cuando el conector lo solicite.
-
-## 3. ChatGPT en la computadora
-
-Usá la **app de ChatGPT para escritorio** con acceso a Plugins y ejecución local. El navegador web por sí solo no carga un marketplace desde una carpeta de tu PC. Instalá Codex CLI si no está disponible y registrá el clon como marketplace local:
-
-```bash
 codex plugin marketplace add <carpeta-del-repo>
-codex plugin marketplace list
 ```
 
-Reiniciá la app de ChatGPT. En **Plugins**, elegí el origen **Informes Perennia (local)**, instalá **perennia-informes** y conectá Plataforma con tu propio usuario. El paquete que corresponde a ChatGPT está en `chatgpt/plugins/perennia-informes/`; su `mcp.json` incluye OAuth. Si el origen local no aparece, verificá que abriste el mismo host local en el que registraste el marketplace y reiniciá la app.
+Reiniciá ChatGPT de escritorio. En **Plugins**, elegí el origen **Informes Perennia (local)** y agregá **perennia-informes**. Esta captura oficial muestra dónde aparece el selector de origen y el botón **+**; buscá los nombres de Perennia en tu pantalla:
 
-## 4. Prueba de entrega
+![Ejemplo oficial del selector de marketplace local y el botón para agregar un plugin](https://developers.openai.com/images/codex/plugins/codex-local-plugin-light.png)
 
-Hacé una prueba con un técnico piloto en **cada** aplicación antes de repartir el manual al equipo:
+*Ejemplo de [OpenAI Developers](https://developers.openai.com/plugins/build/plugins).* Conectá Plataforma y seguí el paso 4.
 
-1. **Carga:** aparecen `conectar-plataforma`, `informe-di`, `informe-plan-abierto` e `informe-plan-cerrado`; el conector anuncia las herramientas del rol `tecnico` descritas en [ACCESOS-ROL-TECNICO.md](ACCESOS-ROL-TECNICO.md), incluidos `consultar_sql` y comandos.
-2. **OAuth:** un técnico inicia sesión con su usuario individual; `mis_capacidades` responde con esa identidad. Desconectar y volver a conectar no debe dar acceso a otra persona.
-3. **Datos:** con la cuenta del piloto, buscar un establecimiento conocido y leer un plan o una grabación que ya consulte normalmente en Plataforma. Confirmar que la identidad y el hub son los esperados y que las lecturas respetan los permisos habituales de esa cuenta.
-4. **Informe:** en una conversación nueva, pedir un borrador de DI, PA o PC de ese caso. Verificar servicio, campaña, versión, cifras, unidades, fuentes y logo. El resultado es un borrador para revisar; no se publica ni envía.
+## Si tenés Claude
 
-Usar un caso de prueba o uno que el técnico ya tenga permitido consultar en Plataforma. No copiar datos reales de un productor al repositorio ni a tickets públicos. Registrar aplicación, versión del plugin, cuenta de prueba, resultado y error exacto de cada paso.
+En Claude chat o la app de Claude no hace falta clonar el repositorio. Claude puede agregarlo directamente desde GitHub. [Guía oficial de Anthropic](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
 
-Si falla la prueba 1 o 2, revisar la instalación o el OAuth. Si falla la 3, revisar el usuario y los permisos existentes en Plataforma. Si falla la 4, revisar herramientas y skills después de comprobar las tres pruebas anteriores. Una vez que pasen, enviar a los técnicos esta guía y [ONBOARDING.md](ONBOARDING.md); cada persona instala y conecta con sus propias cuentas.
+### 1. Abrí Plugins
+
+Entrá en **Personalización → Plugins**:
+
+![Captura de Claude en Personalización con la pestaña Plugins seleccionada](docs/capturas/claude-01-plugins.jpg)
+
+### 2. Agregá el marketplace
+
+Pulsá **Agregar → Agregar marketplace**:
+
+![Captura del menú Agregar plugin con la opción Agregar marketplace](docs/capturas/claude-02-agregar-marketplace.jpg)
+
+Elegí **Agregar desde un repositorio**:
+
+![Captura de Claude con la opción Agregar desde un repositorio](docs/capturas/claude-03-desde-repositorio.jpg)
+
+### 3. Indicá el repositorio de Perennia
+
+Ingresá `Perennia-Regeneracion/perennia-informes-tecnicos` y pulsá **Sincronizar**:
+
+![Captura del formulario de Claude con la dirección del repositorio Perennia lista para sincronizar](docs/capturas/claude-04-repositorio.jpg)
+
+Dentro del marketplace, agregá el plugin **perennia-informes**. Abrí sus **Conectores** y conectá **conector-plataforma**. Iniciá sesión con tu propio usuario de Plataforma y autorizá la conexión cuando se solicite.
+
+### 4. Prepará tu primer borrador
+
+Abrí un chat nuevo con el plugin activo y escribí:
+
+> Comprobá mi conexión con Plataforma Perennia usando `mis_capacidades`. No hagas cambios.
+
+Después indicá el establecimiento, el tipo de informe, el servicio o campaña y tu nombre. Podés adjuntar notas, fotos e informes anteriores como referencia de formato. Revisá el borrador antes de firmarlo o enviarlo.
+
+## Si necesitás ayuda
+
+- **No aparece el plugin:** en la web, revisá si el ZIP se agregó; en escritorio, confirmá que registraste la carpeta correcta y reiniciá la app. En Claude, revisá que el marketplace se haya sincronizado.
+- **Plataforma pide entrar de nuevo:** conectá el MCP con tu propio usuario de Plataforma. No compartas contraseñas ni tokens.
+- **Falta un dato:** indicá el establecimiento y servicio con más precisión. Si Plataforma no lo devuelve, aportá tus notas y dejá el dato pendiente de verificar.
+- **Querés actualizar el plugin:** en ChatGPT web, descargá y cargá la nueva versión del ZIP; en ChatGPT de escritorio, ejecutá `git pull` dentro de la carpeta descargada y refrescá el marketplace; en Claude, actualizá el marketplace desde Plugins.
+
+Para verificar la instalación antes de entregarla a todo el equipo, seguí la [prueba guiada](ONBOARDING.md). No subas informes de productores al repositorio público ni a tickets públicos.
