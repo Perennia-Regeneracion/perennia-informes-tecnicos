@@ -1,0 +1,20 @@
+{
+  "name": "perennia-informes-local",
+  "interface": {
+    "displayName": "Informes Perennia (local)"
+  },
+  "plugins": [
+    {
+      "name": "perennia-informes",
+      "source": {
+        "source": "local",
+        "path": "./chatgpt/plugins/perennia-informes"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

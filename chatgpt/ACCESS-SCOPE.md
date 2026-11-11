@@ -1,28 +1,7 @@
-# Contrato del MCP público de informes
+# Acceso del plugin con el MCP habitual de Plataforma
 
-Destino de los plugins de Claude y ChatGPT: `https://plataforma2.perennia.com.ar/mcp-informes`. Este endpoint debe existir y pasar una prueba con tres técnicos antes de habilitar Claude o subir el ZIP al directorio público de ChatGPT. El MCP general `/mcp` no sirve para estos paquetes: anuncia herramientas de escritura y `consultar_sql` permite lecturas más amplias que los planes asignados.
+Los plugins de Claude y ChatGPT usan `https://plataforma2.perennia.com.ar/mcp`. El servidor resuelve la identidad mediante OAuth y anuncia herramientas según el rol y otras capacidades. Ver el [inventario del rol `tecnico`](../ACCESOS-ROL-TECNICO.md).
 
-## Autoridad
+El alcance actual del rol es más amplio que preparar informes: incluye `consultar_sql`, lecturas genéricas y comandos. Las skills orientan la tarea, pero no limitan lo que la cuenta puede pedirle al MCP. La autorización efectiva de cada dato y acción depende de las RPC, grants y RLS de Plataforma.
 
-- Autenticar cada llamada con el OAuth interactivo del usuario de Plataforma; validar el JWT y resolver `id_educador` y `id_hub` desde la base de datos en el servidor. Rechazar tokens de servicio delegado y no aceptar un ID de técnico enviado por el cliente como autoridad. Regla funcional: FCH-555 v3.
-- Un plan es visible para el técnico responsable del establecimiento y para cada técnico asignado al servicio que lo origina, aunque sean personas distintas. La pertenencia al mismo hub, la autoría de una transcripción o la mención en una grabación no amplían este permiso. Regla funcional: Plataforma FCH-555 v2.
-- Una grabación es visible sólo si pertenece al usuario o está anclada a un servicio o establecimiento asignado a él. La misma regla debe aplicarse a la lista, el detalle, la transcripción y cualquier URL de archivo.
-- Sin asignación verificable, responder `RESOURCE_NOT_FOUND` o `AUTHZ`; nunca devolver datos parciales, incluso si el usuario conoce el ID.
-- Aplicar el filtro en las consultas/funciones de base de datos y volver a comprobarlo en cada lectura. Las instrucciones de la skill y el filtrado en ChatGPT no son una barrera de autorización.
-
-## Herramientas permitidas
-
-El endpoint debe anunciar únicamente herramientas de lectura necesarias para informes, por ejemplo:
-
-1. `mis_capacidades`: identidad y lista de herramientas de este endpoint, sin el catálogo del MCP general.
-2. `listar_planes_asignados`: sólo planes DI/PA/PC del técnico, con identificador, servicio, establecimiento, campaña, versión y estado.
-3. `obtener_plan_asignado`: datos publicados del plan solicitado y sus tablas/indicadores asociados, tras verificar asignación.
-4. `obtener_establecimiento_asignado`: contexto del campo necesario para el informe, tras verificar asignación.
-5. `buscar_grabaciones_propias`: metadatos de grabaciones del técnico o ancladas a sus servicios/campos.
-6. `obtener_transcripcion_grabacion_propia`: transcripción de una grabación visible, con la misma verificación.
-
-No anunciar `consultar_sql`, lecturas genéricas de tablas ni acciones de escritura. Marcar cada herramienta con `readOnlyHint: true` y justificar la anotación en la revisión de OpenAI.
-
-## Prueba mínima de autorización
-
-Crear tres usuarios técnicos A, B y C del mismo hub: A responsable del establecimiento, B asignado al servicio y C sin ninguna de esas asignaciones. A y B deben listar y leer el plan del servicio; C no debe verlo ni obtenerlo por ID. Quitar la responsabilidad de A y comprobar que pierde acceso en la siguiente lectura, mientras B lo conserva. Probar además planes y grabaciones exclusivos de A y B, con rechazo cruzado por ID. Comprobar una grabación sin ancla, otra anclada a un servicio asignado y una anclada a un servicio ajeno. Verificar que el listado de herramientas del MCP no incluye escritura ni SQL genérico.
+Para esta entrega rigen los permisos ya definidos internamente en Plataforma para el rol `tecnico`. No se agrega una regla especial por asignación de establecimiento o servicio. El técnico debe iniciar sesión con su usuario individual; `mis_capacidades` y una lectura real permiten comprobar qué identidad y datos recibe esa cuenta.
