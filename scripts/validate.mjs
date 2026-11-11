@@ -49,7 +49,7 @@ if (chatgptManifest.extensions?.["com.openai"]?.onboardingSkill !== "./skills/co
 if (existsSync(join(chatgptPlugin, ".mcp.json")) || existsSync(join(chatgptPlugin, ".app.json"))) fail("Configuración local o app ajena en el paquete público");
 if (chatgptMcp.$schema !== "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json") fail("MCP ChatGPT sin schema portable");
 const chatgptServer = chatgptMcp.mcpServers?.["conector-plataforma"];
-if (Object.keys(chatgptMcp.mcpServers ?? {}).length !== 1 || chatgptServer?.type !== "streamable-http" || chatgptServer?.url !== mcp.mcpServers["conector-plataforma"].url) fail("MCP público de ChatGPT desalineado");
+if (Object.keys(chatgptMcp.mcpServers ?? {}).length !== 1 || chatgptServer?.type !== "streamable-http" || chatgptServer?.url !== "https://plataforma2.perennia.com.ar/mcp-informes") fail("El plugin público debe usar el MCP acotado a informes");
 if (chatgptServer.extensions?.["com.openai"]?.auth?.client?.mode !== "dcr" || chatgptServer.extensions?.["com.openai"]?.auth?.type !== "oauth") fail("OAuth del paquete ChatGPT inválido");
 const chatgptInterface = chatgptManifest.extensions?.["com.openai"]?.interface;
 for (const field of ["displayName", "shortDescription", "longDescription", "developerName", "category", "websiteURL", "supportURL", "composerIcon", "logo"]) {
