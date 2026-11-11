@@ -39,14 +39,25 @@ console.log("Kit público: cuatro skills, un conector y manifiestos válidos.");
 
 const chatgptRoot = join(root, "chatgpt");
 const chatgptPlugin = join(chatgptRoot, "plugins/perennia-informes");
-const chatgptMarketplace = JSON.parse(readFileSync(join(chatgptRoot, ".agents/plugins/marketplace.json"), "utf8"));
-const chatgptManifest = JSON.parse(readFileSync(join(chatgptPlugin, ".codex-plugin/plugin.json"), "utf8"));
+const chatgptManifest = JSON.parse(readFileSync(join(chatgptPlugin, "plugin.json"), "utf8"));
+const chatgptMcp = JSON.parse(readFileSync(join(chatgptPlugin, "mcp.json"), "utf8"));
 const chatgptSkills = readdirSync(join(chatgptPlugin, "skills")).sort();
 if (JSON.stringify(chatgptSkills) !== JSON.stringify(expectedSkills)) fail("Skills de ChatGPT incompletas");
-if (chatgptMarketplace.plugins?.length !== 1 || chatgptMarketplace.plugins[0].source?.path !== "./plugins/perennia-informes") fail("Marketplace de ChatGPT inválido");
 if (chatgptManifest.name !== manifest.name || chatgptManifest.version !== manifest.version) fail("Identidad de ChatGPT desalineada");
-if (chatgptManifest.skills !== "./skills/" || chatgptManifest.onboardingSkill !== "./skills/conectar-plataforma/SKILL.md") fail("Skills de ChatGPT sin declarar");
-if (existsSync(join(chatgptPlugin, ".mcp.json")) || existsSync(join(chatgptPlugin, "mcp.json"))) fail("El plugin de ChatGPT web no debe declarar MCP local");
+if (chatgptManifest.$schema !== "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json") fail("Plugin ChatGPT sin schema portable");
+if (chatgptManifest.extensions?.["com.openai"]?.onboardingSkill !== "./skills/conectar-plataforma/SKILL.md") fail("Onboarding de ChatGPT sin declarar");
+if (existsSync(join(chatgptPlugin, ".mcp.json")) || existsSync(join(chatgptPlugin, ".app.json"))) fail("Configuración local o app ajena en el paquete público");
+if (chatgptMcp.$schema !== "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json") fail("MCP ChatGPT sin schema portable");
+const chatgptServer = chatgptMcp.mcpServers?.["conector-plataforma"];
+if (Object.keys(chatgptMcp.mcpServers ?? {}).length !== 1 || chatgptServer?.type !== "streamable-http" || chatgptServer?.url !== mcp.mcpServers["conector-plataforma"].url) fail("MCP público de ChatGPT desalineado");
+if (chatgptServer.extensions?.["com.openai"]?.auth?.client?.mode !== "dcr" || chatgptServer.extensions?.["com.openai"]?.auth?.type !== "oauth") fail("OAuth del paquete ChatGPT inválido");
+const chatgptInterface = chatgptManifest.extensions?.["com.openai"]?.interface;
+for (const field of ["displayName", "shortDescription", "longDescription", "developerName", "category", "websiteURL", "supportURL", "composerIcon", "logo"]) {
+  if (!chatgptInterface?.[field]) fail(`Falta metadata pública ChatGPT: ${field}`);
+}
+for (const field of ["composerIcon", "logo"]) {
+  if (!existsSync(join(chatgptPlugin, chatgptInterface[field]))) fail(`Falta asset público ChatGPT: ${field}`);
+}
 
 function compareTrees(source, target, relative = "") {
   const sourceEntries = readdirSync(source).sort();
@@ -67,4 +78,4 @@ function compareTrees(source, target, relative = "") {
 for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))) {
   compareTrees(join(plugin, "skills", skill), join(chatgptPlugin, "skills", skill), skill);
 }
-console.log("Kit ChatGPT: marketplace web y tres skills de informes alineadas.");
+console.log("Kit ChatGPT: paquete portable, OAuth y tres skills de informes alineadas.");

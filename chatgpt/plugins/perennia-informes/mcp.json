@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "conector-plataforma": {
+      "type": "streamable-http",
+      "url": "https://plataforma2.perennia.com.ar/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "dcr"
+            },
+            "baseScopes": ["openid", "email", "profile", "offline_access"]
+          }
+        }
+      }
+    }
+  }
+}

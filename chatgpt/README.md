@@ -1,29 +1,31 @@
-# Informes Perennia en ChatGPT
+# Informes Perennia para cuentas individuales de ChatGPT
 
-Este directorio contiene un plugin de **skills** para ChatGPT web. La app MCP de Plataforma se conecta por separado; el plugin no contiene credenciales ni da acceso a campos por sí mismo.
+El paquete en `plugins/perennia-informes/` reúne las tres skills de informes y una conexión MCP remota a Plataforma Perennia. Cada técnico autoriza **su propia cuenta** mediante OAuth. El paquete no contiene credenciales, informes de productores ni acceso compartido.
 
-## Configuración por el administrador
+## Estado de publicación
 
-1. En ChatGPT, crear una conexión a un servidor MCP personalizado llamada **conector-plataforma**. Endpoint: `https://plataforma2.perennia.com.ar/mcp`. Elegir **OAuth**. ChatGPT debe descubrir el servidor y solicitar el inicio de sesión de una cuenta de Plataforma. No usar una cuenta compartida para los técnicos.
-2. Probar con una cuenta autorizada: ejecutar `mis_capacidades` en modo `resumen`, buscar un establecimiento de prueba al que esa cuenta tenga acceso y hacer una lectura. Revisar las herramientas y habilitar sólo las acciones de lectura necesarias para informes. No dar por probada la conexión por la mera aparición del servidor en la lista.
-3. Publicar o compartir esa conexión con los técnicos según los controles del workspace. Cada técnico debe autorizarla con **su propia cuenta de Plataforma**.
-4. En **Admin Console → Plugins → Add → Import marketplace**, usar `https://github.com/Perennia-Regeneracion/perennia-informes-tecnicos` como Source, `chatgpt` como Path y la rama `main` (o dejar Branch vacío). Revisar el resultado de importación y permitir la instalación de **Informes Perennia**.
+El repositorio contiene el paquete para presentar al **directorio público de plugins de ChatGPT y Codex**. Subirlo a GitHub o importar un marketplace no lo publica en ese directorio. Hasta que OpenAI apruebe la presentación y Perennia pulse **Publish**, los técnicos no podrán instalarlo desde sus cuentas individuales.
 
-El marketplace de ChatGPT se mantiene separado del de Claude. No contiene `.mcp.json`, porque ChatGPT web puede marcar como **Desktop only** un plugin importado que declara MCP directamente, incluso con URL HTTPS. La conexión externa se gestiona en el workspace. Esta versión no vincula automáticamente la app al plugin: el técnico debe seleccionar **Informes Perennia** y **conector-plataforma** en el mensaje que necesite datos.
+## Preparar la presentación
 
-Si se quiere una única instalación que incluya la app, primero hay que registrar y aprobar la app en el workspace y agregar su ID real mediante `.app.json` al plugin de ChatGPT. Ese ID depende de la conexión creada y no se inventa en este repositorio público.
+1. Ejecutar `PUBLIC_KIT_ROOT=. node scripts/validate.mjs` desde la raíz y `bash scripts/package-chatgpt.sh` para generar el ZIP sin secretos.
+2. En la organización de OpenAI que publicará como Perennia, completar la verificación de identidad y confirmar acceso **Apps Management Write**. Subir el ZIP en **Platform → Plugins → Upload new or existing plugin**, eligiendo **With MCP**.
+3. Completar en `plugin.json` los enlaces públicos reales de **política de privacidad** y **términos de servicio**. Se dejaron sin declarar porque no encontramos páginas públicas verificables de Perennia; no se deben inventar textos legales ni apuntar a rutas que redirijan al login.
+4. Conectar el MCP en el portal, completar la verificación del dominio y autorizar una cuenta de prueba de Plataforma. El servidor anuncia OAuth con registro dinámico y PKCE S256, pero la conexión completa y la renovación de sesión deben probarse en el portal.
+5. Revisar herramientas descubiertas, permisos y datos que una cuenta de técnico puede leer. Preparar exactamente **cinco casos positivos y tres negativos**, una grabación de demostración y acceso de prueba para revisión. Cargar credenciales sólo en el formulario seguro del portal, nunca en el repositorio.
+6. Resolver las observaciones automáticas y enviar a revisión. Tras la aprobación, publicar el plugin y probar instalación y borrador desde una cuenta individual de técnico distinta de la del publicador.
 
-## Uso por el técnico
+La [prueba guiada](ONBOARDING.md) cubre el último paso. La publicación pública está sujeta a la revisión de OpenAI y a las funciones disponibles en el plan de cada técnico.
 
-1. Instalar **Informes Perennia** desde Plugins y conectar **conector-plataforma** con su cuenta.
-2. En un chat nuevo de Work, seleccionar el plugin y la app. Pedir: «Comprobá mi conexión con Plataforma Perennia. Decime si `mis_capacidades` responde. No hagas cambios».
-3. Pedir un borrador indicando nombre del establecimiento, tipo de informe, servicio o campaña y nombre del técnico. Adjuntar observaciones, fotos y un informe modelo propio si corresponde.
-4. Revisar cifras, fuentes, fechas, análisis, logo y preguntas pendientes antes de firmar o enviar. El flujo entrega un **borrador**; no publica ni envía informes.
+## Uso por el técnico, después de publicar
 
-Ver [ONBOARDING.md](ONBOARDING.md) para la prueba completa. La disponibilidad de conexiones MCP, importación de marketplaces y controles de publicación depende del plan y de la configuración de cada workspace.
+1. Buscar **Informes Perennia** en Plugins, instalarlo y conectar Plataforma con su cuenta.
+2. En un chat nuevo de Work, seleccionar el plugin y pedir: «Comprobá mi conexión con Plataforma Perennia. Decime si `mis_capacidades` responde. No hagas cambios».
+3. Pedir un borrador indicando establecimiento, tipo de informe, servicio o campaña y nombre del técnico. Adjuntar observaciones, fotos y un informe modelo propio si corresponde.
+4. Revisar cifras, fuentes, fechas, análisis, logo y preguntas pendientes antes de firmar o enviar. Este flujo entrega un **borrador**; no publica ni envía informes.
 
 ## Fuentes oficiales
 
-- [Importar marketplaces desde GitHub](https://help.openai.com/en/articles/20001504-importing-and-syncing-plugin-marketplaces-from-github)
-- [Conectar servidores MCP personalizados](https://help.openai.com/en/articles/12584461-connecting-custom-mcp-servers-in-chatgpt)
-- [Autenticación OAuth de plugins](https://developers.openai.com/plugins/build/auth)
+- [Empaquetar plugins](https://developers.openai.com/plugins/build/plugins)
+- [Subir y publicar plugins](https://developers.openai.com/plugins/deploy/submission)
+- [Autenticación OAuth](https://developers.openai.com/plugins/build/auth)
