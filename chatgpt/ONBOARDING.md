@@ -1,6 +1,6 @@
 # Prueba guiada con una cuenta individual de ChatGPT
 
-La prueba empieza después de la instalación local y de que Perennia habilite el MCP de informes. Termina con un borrador revisable; no publica ni envía datos a productores.
+La prueba empieza después de la instalación local y de conectar el MCP habitual de Plataforma. Termina con un borrador revisable; no publica ni envía datos a productores.
 
 1. **Instalación:** en una cuenta individual de técnico, abrir la app de ChatGPT para escritorio, agregar el marketplace local según [INSTALACION-LOCAL.md](../INSTALACION-LOCAL.md) e instalar **Informes Perennia**. Confirmar que el conector de Plataforma está incluido.
 2. **Autenticación:** conectar Plataforma con la cuenta personal del técnico. En Work, seleccionar el plugin y pedir `mis_capacidades` con `{"modo":"resumen"}`. Registrar respuesta real o error exacto.

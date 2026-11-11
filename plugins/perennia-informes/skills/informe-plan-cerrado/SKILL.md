@@ -12,7 +12,7 @@ Antes de maquetar, seguí [perfil y nodo](references/perfil-y-nodo.md): recuper�
 ## Preparar la evidencia
 
 1. Confirmá establecimiento, servicio, período, técnico que firma y alcance del pedido. Si ya existe un informe de ese servicio, preguntá si se trata de una revisión o de uno nuevo.
-2. Usá `listar_planes_asignados` para identificar el caso y `obtener_plan_asignado` junto con `obtener_establecimiento_asignado` para leerlo. Confirmá establecimiento, servicio, período y versión publicada. Verificá unidades, escenario y procedencia de cada cifra. No inventes números ni consultes datos de otros campos como reemplazo.
+2. Usá `buscar_establecimiento`, `describir_tabla` y las herramientas de lectura del `conector-plataforma` disponibles para esa cuenta. Filtrá por establecimiento, servicio y fechas. Verificá unidades, escenario y procedencia de cada cifra. No inventes números ni consultes datos de otros campos como reemplazo.
 3. Pedí notas de campo, observaciones del productor, fotos, mapas y resultados no disponibles en Plataforma. Traé informes previos sólo si el técnico los aporta o su cuenta puede leerlos; sirven para entender la historia, no para copiar conclusiones.
 4. Organizá los hechos en una matriz de trabajo: dato y fuente; observación del técnico; interpretación; pregunta pendiente; recomendación posible. Mostrá contradicciones antes de escribir.
 

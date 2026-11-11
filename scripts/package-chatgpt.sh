@@ -6,13 +6,13 @@ PUBLIC_KIT_ROOT="$root" node "$root/scripts/validate.mjs"
 
 output="${1:-$root/chatgpt/perennia-informes-chatgpt.zip}"
 rm -f "$output"
-endpoint="https://plataforma2.perennia.com.ar/mcp-informes"
+endpoint="https://plataforma2.perennia.com.ar/mcp"
 status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 -X POST \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
   --data '{}' "$endpoint")"
 if [ "$status" != "401" ]; then
-  echo "El endpoint acotado a informes no devolvió el desafío OAuth esperado (HTTP $status). No se genera el ZIP público." >&2
+  echo "El MCP habitual de Plataforma no devolvió el desafío OAuth esperado (HTTP $status). No se genera el ZIP." >&2
   exit 1
 fi
 

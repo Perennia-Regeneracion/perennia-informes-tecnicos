@@ -2,7 +2,7 @@
 
 Cada técnico usa su propia cuenta de Claude o ChatGPT y se autentica con su usuario de Plataforma Perennia. El repositorio contiene instrucciones y la dirección del conector; no contiene credenciales ni informes reales.
 
-**Estado actual:** las skills se pueden instalar, pero el conector de informes todavía no está operativo. `https://plataforma2.perennia.com.ar/mcp-informes` debe responder al protocolo MCP con OAuth y aplicar los permisos de FCH-555 antes de usar datos de productores. No conectar el MCP general `/mcp` como sustituto.
+**Estado actual:** los plugins apuntan al MCP habitual de Plataforma (`https://plataforma2.perennia.com.ar/mcp`). La instalación de archivos está validada; falta comprobar OAuth y acceso efectivo con cuentas técnicas en Claude y ChatGPT. Revisá [el catálogo del rol técnico](ACCESOS-ROL-TECNICO.md).
 
 ## 1. Obtener el repositorio
 
@@ -48,11 +48,11 @@ Reiniciá la app de ChatGPT. En **Plugins**, elegí el origen **Informes Perenni
 
 La instalación se considera comprobada sólo cuando se completan estas cuatro pruebas en **ambas** aplicaciones:
 
-1. **Carga:** aparecen `conectar-plataforma`, `informe-di`, `informe-plan-abierto` e `informe-plan-cerrado`; el conector anuncia sólo herramientas de lectura de informes y no `consultar_sql` ni acciones de escritura.
+1. **Carga:** aparecen `conectar-plataforma`, `informe-di`, `informe-plan-abierto` e `informe-plan-cerrado`; el conector anuncia las herramientas del rol `tecnico` descritas en [ACCESOS-ROL-TECNICO.md](ACCESOS-ROL-TECNICO.md), incluidos `consultar_sql` y comandos.
 2. **OAuth:** un técnico inicia sesión con su usuario individual; `mis_capacidades` responde con esa identidad. Desconectar y volver a conectar no debe dar acceso a otra persona.
 3. **Permisos:** con A responsable del establecimiento y B asignado al servicio, ambos ven el plan. C, del mismo hub y sin asignación, no lo ve ni puede obtenerlo por ID. Repetir con grabaciones y transcripciones, y comprobar que quitar una asignación revoca el acceso en la siguiente lectura.
 4. **Informe:** en una conversación nueva, pedir un borrador de DI, PA o PC de un caso de prueba autorizado. Verificar servicio, campaña, versión, cifras, unidades, fuentes y logo. El resultado es un borrador para revisar; no se publica ni envía.
 
 Usar cuentas y datos sintéticos para la prueba de permisos. No copiar datos reales de un productor al repositorio ni a tickets públicos. Registrar aplicación, versión del plugin, cuenta de prueba, resultado y error exacto de cada paso.
 
-Si falla la prueba 1 o 2, revisar la instalación o el OAuth. Si falla la 3, no habilitar el conector para técnicos: el permiso debe corregirse en Plataforma. Si falla la 4, revisar herramientas y skills después de comprobar las tres pruebas anteriores.
+Si falla la prueba 1 o 2, revisar la instalación o el OAuth. Si falla la 3, el permiso definido para informes no está aplicado por Plataforma. Registrar el caso y corregir la autorización del backend antes de declarar que el acceso se limita a asignaciones. Si falla la 4, revisar herramientas y skills después de comprobar las tres pruebas anteriores.

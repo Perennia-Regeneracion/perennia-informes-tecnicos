@@ -3,7 +3,7 @@
   "mcpServers": {
     "conector-plataforma": {
       "type": "streamable-http",
-      "url": "https://plataforma2.perennia.com.ar/mcp-informes",
+      "url": "https://plataforma2.perennia.com.ar/mcp",
       "extensions": {
         "com.openai": {
           "auth": {

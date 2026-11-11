@@ -11,9 +11,9 @@ Antes de maquetar, seguí [perfil y nodo](references/perfil-y-nodo.md): recuper�
 
 ## Datos
 
-1. Usá `listar_planes_asignados` para identificar el servicio, establecimiento y campaña; después leé el contexto con `obtener_establecimiento_asignado`.
-2. Elegí la versión cerrada y publicada entre las que devuelve el conector. Si hay varios cierres, mostrá versión, horizonte y fecha, y pedí al técnico que elija. Guardá el identificador del cierre como evidencia de trabajo, sin exigir que lo copie el usuario.
-3. Leé ese cierre con `obtener_plan_asignado`. Conservá unidad, período y origen de cada cifra. Un valor nulo significa “sin calcular”; no lo conviertas en cero ni lo reemplaces con un cálculo propio. No mezcles cierres.
+1. Con `buscar_establecimiento` identificá el campo. Descubrí por nombre corto `consultar_sql` y `describir_tabla` del `conector-plataforma`; usá sólo lecturas que permita la cuenta conectada.
+2. Consultá la vista de versiones del plan disponible en Plataforma y elegí el cierre publicado del servicio y campaña indicados. Si hay varios cierres, mostrá versión, horizonte y fecha, y pedí al técnico que elija. Guardá el identificador del cierre como evidencia de trabajo, sin exigir que lo copie el usuario.
+3. Leé los resultados, mapa, historial y notas disponibles para **ese mismo cierre**. Conservá unidad, período y origen de cada cifra. Un valor nulo significa “sin calcular”; no lo conviertas en cero ni lo reemplaces con un cálculo propio. No mezcles cierres.
 4. Pedí al técnico los objetivos, las decisiones de manejo, los acuerdos con el productor y las observaciones que no estén accesibles. Distinguilos de los resultados calculados.
 
 Si una vista o dato no está disponible para esa cuenta, explicá la limitación y trabajá con el material que aporte el técnico. Nunca uses credenciales de otra persona ni supongas que una respuesta vacía significa que el dato no existe.

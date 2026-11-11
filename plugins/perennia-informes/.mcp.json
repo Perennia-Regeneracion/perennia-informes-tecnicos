@@ -2,7 +2,7 @@
   "mcpServers": {
     "conector-plataforma": {
       "type": "http",
-      "url": "https://plataforma2.perennia.com.ar/mcp-informes"
+      "url": "https://plataforma2.perennia.com.ar/mcp"
     }
   }
 }
