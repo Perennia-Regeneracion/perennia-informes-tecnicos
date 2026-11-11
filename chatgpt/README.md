@@ -1,8 +1,8 @@
-# Informes Perennia en ChatGPT de escritorio
+# Informes Perennia en ChatGPT
 
 El paquete `plugins/perennia-informes/` reúne las skills de Diagnóstico Inicial, Plan Abierto y Plan Cerrado con un conector MCP remoto a Plataforma Perennia. Cada técnico debe autorizar su propia cuenta mediante OAuth. El paquete no contiene credenciales ni informes de productores.
 
-La distribución prevista es **manual y local**, desde el repositorio público. No requiere publicar el plugin en el directorio oficial de OpenAI. La app de ChatGPT para escritorio puede cargar el marketplace local de `.agents/plugins/marketplace.json`; seguí la [guía común de instalación y prueba](../INSTALACION-LOCAL.md).
+La distribución prevista es **manual**, desde el repositorio público. No requiere publicar el plugin en el directorio oficial de OpenAI. En ChatGPT web, el técnico puede cargar el [ZIP del plugin](perennia-informes-chatgpt-0.1.3.zip) desde **Complementos → Agregar → Cargar archivo del complemento**, si su cuenta permite esa opción. ChatGPT de escritorio también puede cargar el marketplace local de `.agents/plugins/marketplace.json`. Seguí la [guía común con capturas](../INSTALACION-LOCAL.md).
 
 ## Estado de la conexión
 

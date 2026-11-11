@@ -4,7 +4,8 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PUBLIC_KIT_ROOT="$root" node "$root/scripts/validate.mjs"
 
-output="${1:-$root/chatgpt/perennia-informes-chatgpt.zip}"
+version="$(node -e 'process.stdout.write(require(process.argv[1]).version)' "$root/chatgpt/plugins/perennia-informes/plugin.json")"
+output="${1:-$root/chatgpt/perennia-informes-chatgpt-${version}.zip}"
 rm -f "$output"
 endpoint="https://plataforma2.perennia.com.ar/mcp"
 status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 -X POST \

@@ -2,7 +2,7 @@
 
 Plugin de Claude para preparar informes de Diagnóstico Inicial, Plan Abierto y Plan Cerrado con la cuenta del técnico en Plataforma Perennia. Incluye una biblioteca de logos de siete nodos. Cada logo se usa como PNG original, sin cambiar sus colores.
 
-También hay un [paquete para instalación local en ChatGPT](chatgpt/README.md), con conexión OAuth individual a Plataforma. La [guía de instalación y prueba](INSTALACION-LOCAL.md) cubre ambas aplicaciones.
+También hay un [paquete para ChatGPT](chatgpt/README.md), que se puede cargar como ZIP en la web si la cuenta lo permite, con conexión OAuth individual a Plataforma. La [guía de instalación con capturas](INSTALACION-LOCAL.md) cubre ambas aplicaciones.
 
 **Estado:** los paquetes de Claude y ChatGPT se pueden instalar manualmente y apuntan al MCP habitual de Plataforma (`https://plataforma2.perennia.com.ar/mcp`). Cada técnico debe conectarse con su cuenta de Plataforma. Rigen los permisos existentes del rol `tecnico`; consultá [su catálogo de herramientas](ACCESOS-ROL-TECNICO.md). Falta comprobar OAuth y un borrador completo con un usuario técnico piloto en cada aplicación.
 
