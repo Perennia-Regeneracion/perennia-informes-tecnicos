@@ -35,10 +35,13 @@ for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))
     if (!png.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) fail(`Logo no es PNG: ${skill}/${node.logo_archivo}`);
   }
 }
-console.log("Kit público: cuatro skills, un conector y manifiestos válidos.");
+console.log("Kit Claude: cuatro skills, un conector y manifiestos válidos.");
 
 const chatgptRoot = join(root, "chatgpt");
 const chatgptPlugin = join(chatgptRoot, "plugins/perennia-informes");
+const localMarketplace = JSON.parse(readFileSync(join(root, ".agents/plugins/marketplace.json"), "utf8"));
+if (localMarketplace.name !== "perennia-informes-local" || localMarketplace.plugins?.length !== 1) fail("Marketplace local de ChatGPT inválido");
+if (localMarketplace.plugins[0].name !== manifest.name || localMarketplace.plugins[0].source?.path !== "./chatgpt/plugins/perennia-informes") fail("Origen local de ChatGPT desalineado");
 const chatgptManifest = JSON.parse(readFileSync(join(chatgptPlugin, "plugin.json"), "utf8"));
 const chatgptMcp = JSON.parse(readFileSync(join(chatgptPlugin, "mcp.json"), "utf8"));
 const chatgptSkills = readdirSync(join(chatgptPlugin, "skills")).sort();
@@ -78,4 +81,4 @@ function compareTrees(source, target, relative = "") {
 for (const skill of expectedSkills.filter((name) => name.startsWith("informe-"))) {
   compareTrees(join(plugin, "skills", skill), join(chatgptPlugin, "skills", skill), skill);
 }
-console.log("Kit ChatGPT: paquete portable, OAuth y tres skills de informes alineadas.");
+console.log("Kit ChatGPT local: OAuth y tres skills de informes alineadas.");
