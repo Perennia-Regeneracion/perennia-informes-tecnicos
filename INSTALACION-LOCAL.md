@@ -6,6 +6,8 @@ Cada técnico usa su propia cuenta de Claude o ChatGPT y se autentica con su usu
 
 ## 1. Obtener el repositorio
 
+El repositorio es público: **no necesitás una cuenta de GitHub**. Para Claude chat podés ir directamente al paso 2; la aplicación obtiene el plugin desde GitHub. Para ChatGPT de escritorio, conservá una copia local:
+
 Con Git instalado, cloná una copia en una carpeta que puedas conservar:
 
 ```bash
